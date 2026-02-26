@@ -229,3 +229,15 @@ theorem uniformContinuous_vsub : UniformContinuous fun x : P × P => x.1 -ᵥ x.
 instance : IsTopologicalAddTorsor P where
   continuous_vadd := uniformContinuous_vadd.continuous
   continuous_vsub := uniformContinuous_vsub.continuous
+
+/-- Pullback of a normed add torsor along an injective map. -/
+abbrev Function.Injective.normedAddTorsor {Q : Type*} [VAdd V Q] [VSub V Q]
+    [Nonempty Q] [PseudoMetricSpace Q] (f : Q → P) (hf : Function.Injective f)
+    (vadd : ∀ (c : V) (x : Q), f (c +ᵥ x) = c +ᵥ f x)
+    (vsub : ∀ (x y : Q), x -ᵥ y = f x -ᵥ f y)
+    (norm : ∀ (x y : Q), dist x y = dist (f x) (f y)) : NormedAddTorsor V Q where
+  add_vadd x y c := hf <| by simp only [vadd, add_vadd]
+  zero_vadd x := hf <| by simp only [vadd, zero_vadd]
+  vsub_vadd' x y := hf <| by simp only [vsub, vadd, vsub_vadd]
+  vadd_vsub' c x := by simp [vsub, vadd]
+  dist_eq_norm' x y := by simp [norm, NormedAddTorsor.dist_eq_norm', vsub]

@@ -227,3 +227,15 @@ lemma pointReflection_eq_subLeft {G : Type*} [AddCommGroup G] (x : G) :
   ext; simp [pointReflection, sub_add_eq_add_sub, two_nsmul]
 
 end Equiv
+
+/-- Pullback of an add torsor along an injective map. -/
+abbrev Function.Injective.addTorsor
+    {M : Type*} {α : Type*} {β : Type*}
+    [AddGroup M] [AddTorsor M α] [VAdd M β] [VSub M β] [Nonempty β] (f : β → α)
+    (hf : Function.Injective f)
+    (vadd : ∀ (c : M) (x : β), f (c +ᵥ x) = c +ᵥ f x)
+    (vsub : ∀ (x y : β), x -ᵥ y = f x -ᵥ f y) : AddTorsor M β where
+  add_vadd x y c := hf <| by simp only [vadd, add_vadd]
+  zero_vadd x := hf <| by simp only [vadd, zero_vadd]
+  vsub_vadd' x y := hf <| by simp only [vsub, vadd, vsub_vadd]
+  vadd_vsub' c x := by simp [vsub, vadd]
