@@ -240,7 +240,7 @@ abbrev Function.Injective.addTorsor
   vsub_vadd' x y := hf <| by simp only [vsub, vadd, vsub_vadd]
   vadd_vsub' c x := by simp [vsub, vadd]
 
-/-- Pullforward of an add torsor along a surjective map. -/
+/-- Pushforward of an add torsor along a surjective map. -/
 abbrev Function.Surjective.addTorsor
     {M : Type*} {α : Type*} {β : Type*}
     [AddGroup M] [AddTorsor M α] [VAdd M β] [VSub M β] [Nonempty β]

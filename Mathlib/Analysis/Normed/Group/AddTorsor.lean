@@ -242,7 +242,7 @@ abbrev Function.Injective.normedAddTorsor {Q : Type*} [VAdd V Q] [VSub V Q]
   vadd_vsub' := (hf.addTorsor f vadd vsub).vadd_vsub'
   dist_eq_norm' x y := by simp [norm, NormedAddTorsor.dist_eq_norm', vsub]
 
-/-- Pullforward of a normed add torsor along a surjective map. -/
+/-- Pushforward of a normed add torsor along a surjective map. -/
 abbrev Function.Surjective.normedAddTorsor
     {Q : Type*} [VAdd V Q] [VSub V Q] [Nonempty Q] [PseudoMetricSpace Q]
     (f : P → Q) (hf : Surjective f)
