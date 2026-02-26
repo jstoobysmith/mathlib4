@@ -241,7 +241,7 @@ abbrev Function.Injective.normedAddTorsor {Q : Type*} [VAdd V Q] [VSub V Q]
 
 /-- Pushforward of a normed add torsor along a surjective map. -/
 abbrev Function.Surjective.normedAddTorsor
-    {Q : Type*} [VAdd V Q] [VSub V Q] [Nonempty Q] [PseudoMetricSpace Q]
+    {Q : Type*} [VAdd V Q] [VSub V Q] [PseudoMetricSpace Q]
     (f : P → Q) (hf : Surjective f)
     (vadd : ∀ (c : V) (x : P), f (c +ᵥ x) = c +ᵥ f x)
     (vsub : ∀ (x y : P), x -ᵥ y = f x -ᵥ f y)
