@@ -235,19 +235,18 @@ abbrev Function.Injective.addTorsor
     (hf : Function.Injective f)
     (vadd : ∀ (c : M) (x : β), f (c +ᵥ x) = c +ᵥ f x)
     (vsub : ∀ (x y : β), x -ᵥ y = f x -ᵥ f y) : AddTorsor M β where
-  add_vadd := (hf.addAction f vadd).add_vadd
-  zero_vadd := (hf.addAction f vadd).zero_vadd
+  __ := hf.addAction f vadd
   vsub_vadd' x y := hf <| by simp only [vsub, vadd, vsub_vadd]
   vadd_vsub' c x := by simp [vsub, vadd]
 
 /-- Pushforward of an add torsor along a surjective map. -/
 abbrev Function.Surjective.addTorsor
     {M : Type*} {α : Type*} {β : Type*}
-    [AddGroup M] [AddTorsor M α] [VAdd M β] [VSub M β] [Nonempty β]
+    [AddGroup M] [AddTorsor M α] [VAdd M β] [VSub M β]
     (f : α → β) (hf : Surjective f)
     (vadd : ∀ (c : M) (x : α), f (c +ᵥ x) = c +ᵥ f x)
     (vsub : ∀ (x y : α), x -ᵥ y = f x -ᵥ f y) : AddTorsor M β where
-  add_vadd := (hf.addAction f vadd).add_vadd
-  zero_vadd := (hf.addAction f vadd).zero_vadd
+  __ := hf.addAction f vadd
+  nonempty := ⟨f (Classical.choice (α := α) AddTorsor.nonempty)⟩
   vsub_vadd' := by simp [hf.forall, ← vadd, ← vsub]
   vadd_vsub' := by simp [hf.forall, ← vadd, ← vsub]
