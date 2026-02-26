@@ -247,6 +247,6 @@ abbrev Function.Surjective.addTorsor
     (vadd : ∀ (c : M) (x : α), f (c +ᵥ x) = c +ᵥ f x)
     (vsub : ∀ (x y : α), x -ᵥ y = f x -ᵥ f y) : AddTorsor M β where
   __ := hf.addAction f vadd
-  nonempty := ⟨f (Classical.choice (α := α) AddTorsor.nonempty)⟩
+  nonempty := AddTorsor.nonempty.map f
   vsub_vadd' := by simp [hf.forall, ← vadd, ← vsub]
   vadd_vsub' := by simp [hf.forall, ← vadd, ← vsub]
