@@ -236,8 +236,21 @@ abbrev Function.Injective.normedAddTorsor {Q : Type*} [VAdd V Q] [VSub V Q]
     (vadd : ∀ (c : V) (x : Q), f (c +ᵥ x) = c +ᵥ f x)
     (vsub : ∀ (x y : Q), x -ᵥ y = f x -ᵥ f y)
     (norm : ∀ (x y : Q), dist x y = dist (f x) (f y)) : NormedAddTorsor V Q where
-  add_vadd x y c := hf <| by simp only [vadd, add_vadd]
-  zero_vadd x := hf <| by simp only [vadd, zero_vadd]
-  vsub_vadd' x y := hf <| by simp only [vsub, vadd, vsub_vadd]
-  vadd_vsub' c x := by simp [vsub, vadd]
+  add_vadd := (hf.addAction f vadd).add_vadd
+  zero_vadd := (hf.addAction f vadd).zero_vadd
+  vsub_vadd' := (hf.addTorsor f vadd vsub).vsub_vadd'
+  vadd_vsub' := (hf.addTorsor f vadd vsub).vadd_vsub'
   dist_eq_norm' x y := by simp [norm, NormedAddTorsor.dist_eq_norm', vsub]
+
+/-- Pullforward of a normed add torsor along a surjective map. -/
+abbrev Function.Surjective.normedAddTorsor
+    {Q : Type*} [VAdd V Q] [VSub V Q] [Nonempty Q] [PseudoMetricSpace Q]
+    (f : P → Q) (hf : Surjective f)
+    (vadd : ∀ (c : V) (x : P), f (c +ᵥ x) = c +ᵥ f x)
+    (vsub : ∀ (x y : P), x -ᵥ y = f x -ᵥ f y)
+    (norm : ∀ (x y : P), dist x y = dist (f x) (f y)) : NormedAddTorsor V Q where
+  add_vadd := (hf.addAction f vadd).add_vadd
+  zero_vadd := (hf.addAction f vadd).zero_vadd
+  vsub_vadd' := (hf.addTorsor f vadd vsub).vsub_vadd'
+  vadd_vsub' := (hf.addTorsor f vadd vsub).vadd_vsub'
+  dist_eq_norm' := by simp [hf.forall, ← norm, NormedAddTorsor.dist_eq_norm', ← vsub]
