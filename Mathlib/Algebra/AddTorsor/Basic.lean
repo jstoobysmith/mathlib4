@@ -229,23 +229,21 @@ lemma pointReflection_eq_subLeft {G : Type*} [AddCommGroup G] (x : G) :
 end Equiv
 
 /-- Pullback of an add torsor along an injective map. -/
-abbrev Function.Injective.addTorsor
-    {M : Type*} {α : Type*} {β : Type*}
-    [AddGroup M] [AddTorsor M α] [VAdd M β] [VSub M β] [Nonempty β] (f : β → α)
+abbrev Function.Injective.addTorsor {G P Q : Type*}
+    [AddGroup G] [AddTorsor G P] [VAdd G Q] [VSub G Q] [Nonempty Q] (f : Q → P)
     (hf : Function.Injective f)
-    (vadd : ∀ (c : M) (x : β), f (c +ᵥ x) = c +ᵥ f x)
-    (vsub : ∀ (x y : β), x -ᵥ y = f x -ᵥ f y) : AddTorsor M β where
+    (vadd : ∀ (c : G) (x : Q), f (c +ᵥ x) = c +ᵥ f x)
+    (vsub : ∀ (x y : Q), x -ᵥ y = f x -ᵥ f y) : AddTorsor G Q where
   __ := hf.addAction f vadd
   vsub_vadd' x y := hf <| by simp only [vsub, vadd, vsub_vadd]
   vadd_vsub' c x := by simp [vsub, vadd]
 
 /-- Pushforward of an add torsor along a surjective map. -/
-abbrev Function.Surjective.addTorsor
-    {M : Type*} {α : Type*} {β : Type*}
-    [AddGroup M] [AddTorsor M α] [VAdd M β] [VSub M β]
-    (f : α → β) (hf : Surjective f)
-    (vadd : ∀ (c : M) (x : α), f (c +ᵥ x) = c +ᵥ f x)
-    (vsub : ∀ (x y : α), x -ᵥ y = f x -ᵥ f y) : AddTorsor M β where
+abbrev Function.Surjective.addTorsor {G P Q : Type*}
+    [AddGroup G] [AddTorsor G P] [VAdd G Q] [VSub G Q]
+    (f : P → Q) (hf : Surjective f)
+    (vadd : ∀ (c : G) (x : P), f (c +ᵥ x) = c +ᵥ f x)
+    (vsub : ∀ (x y : P), x -ᵥ y = f x -ᵥ f y) : AddTorsor G Q where
   __ := hf.addAction f vadd
   nonempty := AddTorsor.nonempty.map f
   vsub_vadd' := by simp [hf.forall, ← vadd, ← vsub]
